@@ -1,11 +1,14 @@
-# xiaodu_app.py (兼容版 - 旧SDK写法)
+# xiaodu_app.py (调试版 - 检查 Secrets 是否正确读取)
 import streamlit as st
 import openai
 import os
 
 st.set_page_config(page_title="小杜 · 诗词智能讲解")
 
-# 设置 API 密钥（旧版写法，兼容 sk-proj 密钥）
+# 🔍 输出读取到的环境变量值（调试用，正式部署时应注释掉）
+st.markdown("🔧 读取 OPENAI_API_KEY：")
+st.code(os.getenv("OPENAI_API_KEY"))
+
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 xiaodu_prompt = """
