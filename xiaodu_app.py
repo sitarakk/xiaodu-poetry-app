@@ -1,10 +1,15 @@
-# xiaodu_app.py (最终修正版)
+# xiaodu_app.py (支持 Project ID 版本)
 import streamlit as st
 from openai import OpenAI
+import os
 
 st.set_page_config(page_title="小杜 · 诗词智能讲解")
 
-client = OpenAI()
+# 明确设置 Project API 密钥 + 项目ID（从环境变量读取）
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),
+    project=os.getenv("OPENAI_PROJECT_ID")
+)
 
 xiaodu_prompt = """
 你是“小杜”，一位沉静温柔、古风雅致的AI智能体，化身自唐代诗人杜甫。
