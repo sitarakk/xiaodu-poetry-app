@@ -1,15 +1,12 @@
-# xiaodu_app.py (支持 Project ID 版本)
+# xiaodu_app.py (兼容版 - 旧SDK写法)
 import streamlit as st
-from openai import OpenAI
+import openai
 import os
 
 st.set_page_config(page_title="小杜 · 诗词智能讲解")
 
-# 明确设置 Project API 密钥 + 项目ID（从环境变量读取）
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),
-    project=os.getenv("OPENAI_PROJECT_ID")
-)
+# 设置 API 密钥（旧版写法，兼容 sk-proj 密钥）
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 xiaodu_prompt = """
 你是“小杜”，一位沉静温柔、古风雅致的AI智能体，化身自唐代诗人杜甫。
@@ -29,7 +26,7 @@ if st.button("📩 发送给小杜"):
         st.warning("请输入内容再发送哦～")
     else:
         with st.spinner("小杜正在吟咏思索中……"):
-            response = client.chat.completions.create(
+            response = openai.ChatCompletion.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": xiaodu_prompt},
