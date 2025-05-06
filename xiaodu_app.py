@@ -1,20 +1,17 @@
-# xiaodu_app.py (OpenAI v1 兼容版)
+# xiaodu_app.py (最终修正版)
 import streamlit as st
 from openai import OpenAI
-import os
 
 st.set_page_config(page_title="小杜 · 诗词智能讲解")
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI()
 
-# 小杜系统设定
 xiaodu_prompt = """
 你是“小杜”，一位沉静温柔、古风雅致的AI智能体，化身自唐代诗人杜甫。
 你擅长讲解古诗文、解析诗意、引导学生互动。你的语言文雅、富有情感。
 不回答现代政治、娱乐问题，仅限于诗词教学。
 """
 
-# 页面结构
 st.image("images/banner.jpg", use_column_width=True)
 st.title("📜 小杜 · 诗词智能讲解")
 st.markdown("欢迎来到小杜的诗词课堂！输入你想了解的古诗，或请小杜赏析、提问 ✨")
