@@ -1,13 +1,11 @@
-# xiaodu_app.py
+# xiaodu_app.py (OpenAI v1 兼容版)
 import streamlit as st
-import openai
+from openai import OpenAI
+import os
 
 st.set_page_config(page_title="小杜 · 诗词智能讲解")
 
-# 读取API密钥
-import os
-api_key = os.getenv("OPENAI_API_KEY")
-openai.api_key = api_key if api_key else "your-api-key-here"
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # 小杜系统设定
 xiaodu_prompt = """
@@ -29,13 +27,13 @@ if st.button("📩 发送给小杜"):
         st.warning("请输入内容再发送哦～")
     else:
         with st.spinner("小杜正在吟咏思索中……"):
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-4",
                 messages=[
                     {"role": "system", "content": xiaodu_prompt},
                     {"role": "user", "content": user_input}
                 ]
             )
-            reply = response["choices"][0]["message"]["content"]
+            reply = response.choices[0].message.content
             st.success("🌸 小杜答曰：")
             st.markdown(reply)
